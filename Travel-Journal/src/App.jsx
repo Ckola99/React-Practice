@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import Entry from "./components/Entry"
+import Header from "./components/Header"
 
 function App() {
 
   return (
     <>
-      <p>hi</p>
+      <Header />
+      <main className="container">
+        <Entry />
+      </main>
     </>
   )
 }
