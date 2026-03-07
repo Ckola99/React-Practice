@@ -1,11 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import ClaudeRecipe from './components/ClaudeRecipe'
+import ChatRecipe from './components/ChatRecipe'
 import IngredientsList from './components/IngredientsList'
+import { getRecipeFromOpenAI } from './ai'
 
 const main = () => {
 	const [ingredients, setIngredients] = useState([])
-	const [recipeShown, setRecipeShown] = useState(false)
+	const [recipe, setRecipe] = useState(false)
 
 
 	const addIngredient = (formData) => {
@@ -13,8 +14,9 @@ const main = () => {
 		setIngredients(prevIngredients => [...prevIngredients, newIngredient])
 	}
 
-	const toggleRecipeShown = () => {
-		setRecipeShown(prevShown => !prevShown)
+	const generateRecipe = async () => {
+		const generatedRecipe = await getRecipeFromOpenAI(ingredients)
+		setRecipe(generatedRecipe)
 	}
 
 	return (
@@ -28,9 +30,9 @@ const main = () => {
 				<button>Add ingredient</button>
 			</form>
 			{ingredients.length > 0 ?
-				<IngredientsList ingredients = {ingredients} toggleRecipeShown={toggleRecipeShown}/>
+				<IngredientsList ingredients = {ingredients} generateRecipe={generateRecipe}/>
 				: null}
-			{ recipeShown && <ClaudeRecipe /> }
+			{ recipe && <ChatRecipe recipe={recipe}/> }
 		</main>
 	)
 }
