@@ -3,10 +3,13 @@ import { useState } from 'react'
 import ChatRecipe from './components/ChatRecipe'
 import IngredientsList from './components/IngredientsList'
 import { getRecipeFromOpenAI } from './ai'
+import { useRef } from 'react'
+import { useEffect } from 'react'
 
 const main = () => {
 	const [ingredients, setIngredients] = useState([])
 	const [recipe, setRecipe] = useState(false)
+	const recipeSection = useRef(null)
 
 
 	const addIngredient = (formData) => {
@@ -19,6 +22,18 @@ const main = () => {
 		setRecipe(generatedRecipe)
 	}
 
+	useEffect(() => {
+		if ( recipe !== "" && recipeSection.current !== null) {
+			// recipeSection.current.scrollIntoView({ behavior: "smooth"})
+
+			const yCoord =  recipeSection.current.getBoundingClientReact().top
+			window.scroll({
+				top: yCoord,
+				behavior: "smooth"
+			})
+		}
+	}, [recipe])
+
 	return (
 		<main>
 			<form action={addIngredient} className='add-ingredient-form'>
@@ -30,7 +45,7 @@ const main = () => {
 				<button>Add ingredient</button>
 			</form>
 			{ingredients.length > 0 ?
-				<IngredientsList ingredients = {ingredients} generateRecipe={generateRecipe}/>
+				<IngredientsList ingredients = {ingredients} generateRecipe={generateRecipe} ref={recipeSection}/>
 				: null}
 			{ recipe && <ChatRecipe recipe={recipe}/> }
 		</main>
