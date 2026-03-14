@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import ChatRecipe from './components/ChatRecipe'
 import IngredientsList from './components/IngredientsList'
@@ -12,11 +11,12 @@ const main = () => {
 	const recipeSection = useRef(null)
 	const [loading, setLoading] = useState(false)
 
-
 	const addIngredient = (formData) => {
 		const newIngredient = formData.get("ingredient")
 		setIngredients(prevIngredients => [...prevIngredients, newIngredient])
 	}
+
+	// this generates our recipe
 
 	const generateRecipe = async () => {
 		setLoading(true)
@@ -27,8 +27,6 @@ const main = () => {
 
 	useEffect(() => {
 		if ( recipe !== "" && recipeSection.current !== null) {
-			// recipeSection.current.scrollIntoView({ behavior: "smooth"})
-
 			const yCoord =  recipeSection.current.getBoundingClientRect().top
 			window.scroll({
 				top: yCoord,
