@@ -15,7 +15,6 @@ const main = () => {
 		setIngredients(prevIngredients => [...prevIngredients, newIngredient])
 	}
 
-	// This generates recipes
 	const generateRecipe = async () => {
 		const generatedRecipe = await getRecipeFromOpenAI(ingredients)
 		setRecipe(generatedRecipe)

@@ -1,4 +1,4 @@
-// this is the ingredients list comp
+
 
 const IngredientsList = ({ ingredients, generateRecipe, ref }) => {
 
