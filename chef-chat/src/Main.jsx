@@ -16,8 +16,6 @@ const main = () => {
 		setIngredients(prevIngredients => [...prevIngredients, newIngredient])
 	}
 
-	// this generates our recipe from open AI
-
 	const generateRecipe = async () => {
 		setLoading(true)
 		const generatedRecipe = await getRecipeFromOpenAI(ingredients)
@@ -38,7 +36,6 @@ const main = () => {
 	return (
 		<main>
 			<form action={addIngredient} className='add-ingredient-form'>
-				<p>WELCOME</p>
 				<input type="text"
 					aria-label="Add ingredient"
 					placeholder='e.g. oregano'
