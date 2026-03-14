@@ -8,8 +8,9 @@ import { useEffect } from 'react'
 
 const main = () => {
 	const [ingredients, setIngredients] = useState([])
-	const [recipe, setRecipe] = useState(false)
+	const [recipe, setRecipe] = useState("")
 	const recipeSection = useRef(null)
+	const [loading, setLoading] = useState(false)
 
 
 	const addIngredient = (formData) => {
@@ -18,15 +19,17 @@ const main = () => {
 	}
 
 	const generateRecipe = async () => {
+		setLoading(true)
 		const generatedRecipe = await getRecipeFromOpenAI(ingredients)
 		setRecipe(generatedRecipe)
+		setLoading(false)
 	}
 
 	useEffect(() => {
 		if ( recipe !== "" && recipeSection.current !== null) {
 			// recipeSection.current.scrollIntoView({ behavior: "smooth"})
 
-			const yCoord =  recipeSection.current.getBoundingClientReact().top
+			const yCoord =  recipeSection.current.getBoundingClientRect().top
 			window.scroll({
 				top: yCoord,
 				behavior: "smooth"
@@ -47,7 +50,7 @@ const main = () => {
 			{ingredients.length > 0 ?
 				<IngredientsList ingredients = {ingredients} generateRecipe={generateRecipe} ref={recipeSection}/>
 				: null}
-			{ recipe && <ChatRecipe recipe={recipe}/> }
+			<ChatRecipe recipe={recipe} loading = {loading} setLoading = {setLoading}/>
 		</main>
 	)
 }
