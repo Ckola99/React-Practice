@@ -9,18 +9,16 @@ const main = () => {
 	const [ingredients, setIngredients] = useState([])
 	const [recipe, setRecipe] = useState("")
 	const recipeSection = useRef(null)
-	const [loading, setLoading] = useState(false)
 
 	const addIngredient = (formData) => {
 		const newIngredient = formData.get("ingredient")
 		setIngredients(prevIngredients => [...prevIngredients, newIngredient])
 	}
 
+	// This generates recipes
 	const generateRecipe = async () => {
-		setLoading(true)
 		const generatedRecipe = await getRecipeFromOpenAI(ingredients)
 		setRecipe(generatedRecipe)
-		setLoading(false)
 	}
 
 	useEffect(() => {
@@ -46,7 +44,7 @@ const main = () => {
 			{ingredients.length > 0 ?
 				<IngredientsList ingredients = {ingredients} generateRecipe={generateRecipe} ref={recipeSection}/>
 				: null}
-			<ChatRecipe recipe={recipe} loading = {loading} setLoading = {setLoading}/>
+			<ChatRecipe recipe={recipe}/>
 		</main>
 	)
 }

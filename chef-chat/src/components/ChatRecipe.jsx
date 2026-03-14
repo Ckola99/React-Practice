@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactMarkdown from "react-markdown"
 
-const ChatRecipe = ({ recipe, loading }) => {
-  if (loading) return <p>Chef is COOKING...</p>
+const ChatRecipe = ({ recipe }) => {
 
   if (!recipe) {
     return null
